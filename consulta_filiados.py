@@ -4,16 +4,13 @@ from dotenv import load_dotenv
 from datetime import datetime, timedelta
 from sqlalchemy import create_engine
 
-# Carregar configurações do .env
 load_dotenv()
 
-# Configurações de conexão
 server = os.getenv('SERVER')
 database = os.getenv('DATABASE')
 username = os.getenv('USERNAME')
 password = os.getenv('PASSWORD')
 
-# String de conexão SQLAlchemy
 conn_str = f'mssql+pyodbc://{username}:{password}@{server}/{database}?driver=ODBC+Driver+17+for+SQL+Server'
 
 def buscar_filiados_dia_anterior():
