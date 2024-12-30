@@ -1,11 +1,7 @@
-# AUTOMAÇÃO DROGARAIA
- Script para automatizar os filiados para importação no sistema drogaraia
-
 
 ## 🐍 **Automatização de Execução de Script Python no Windows**
 
-Este projeto tem como objetivo automatizar a execução de um script Python diariamente usando o **Agendador de Tarefas do Windows (Task Scheduler)**. Ideal para tarefas recorrentes como consultas a bancos de dados e geração de relatórios.
-
+Este projeto tem como objetivo automatizar a execução de um script Python diariamente usando o **Agendador de Tarefas do Windows (Task Scheduler)**. Ele facilita tarefas recorrentes como consultas a bancos de dados e geração de relatórios dos filiados que realizaram adesão no dia anterior.
 
 ---
 
@@ -18,31 +14,44 @@ Antes de começar, você precisa ter os seguintes itens instalados no seu sistem
 
 2. **Bibliotecas Python Necessárias**:
 
-   Instale as dependências do projeto usando `pip`:
+   Instale as dependências do projeto usando o seguinte comando:
 
-   ```
-   pip install pyodbc pandas python-dotenv SQLAlchemy schedule
+   ```bash
+   pip install -r requirements.txt
    ```
 
 ---
 
-### ⚙️ **Configurar Variáveis de Ambiente**
+### ⚙️ **Configuração do Projeto**
 
-Crie um arquivo `.env` na pasta raiz do projeto e adicione as configurações de conexão com o banco de dados:
+1. **Configurar Variáveis de Ambiente**:
 
-```plaintext
-SERVER=
-DATABASE=
-USERNAME=seu_usuario
-PASSWORD=sua_senha
-```
+   Crie um arquivo `.env` na pasta raiz do projeto e adicione as configurações de conexão com o banco de dados:
 
+   ```plaintext
+   SERVER=nome_do_servidor
+   DATABASE=nome_do_banco
+   USERNAME=seu_usuario
+   PASSWORD=sua_senha
+   ```
+
+2. **Criação do Arquivo .bat**:
+
+   Crie um arquivo `.bat` para facilitar a execução do script pelo Agendador de Tarefas. Exemplo do conteúdo do arquivo `.bat`:
+
+   ```plaintext
+   @echo off
+   cd C:\Users\14749431605\Downloads\DROGARAIA
+   python consulta_filiados.py
+   ```
+
+   - **Salvar o arquivo**: Nomeie o arquivo como `rodar_script.bat` e salve-o na mesma pasta do projeto.
 
 ---
 
 ### 🗓️ **Agendando o Script com o Agendador de Tarefas do Windows**
 
-Siga os passos abaixo para agendar a execução automática do script.
+Use o arquivo `.bat` criado para agendar a execução do script automaticamente.
 
 1. **Abra o Agendador de Tarefas**:
    
@@ -54,7 +63,7 @@ Siga os passos abaixo para agendar a execução automática do script.
 
 3. **Defina o Nome e a Descrição**:
    
-   - **Nome**: `Executar Script Python`
+   - **Nome**: `Executar Script Python Drogaraia`
    - **Descrição**: `Executa o script consulta_filiados.py diariamente.`
 
 4. **Defina a Frequência**:
@@ -71,19 +80,9 @@ Siga os passos abaixo para agendar a execução automática do script.
 
 7. **Configurar o Programa a Ser Executado**:
 
-   - **Programa/script**: Insira o caminho completo para o `python.exe`. Exemplo:
+   - **Programa/script**: Insira o caminho completo para o arquivo `.bat`. Exemplo:
      ```plaintext
-     C:\Python39\python.exe
-     ```
-
-   - **Adicionar argumentos**: Insira o caminho completo para o script. Exemplo:
-     ```plaintext
-     C:\Users\14749431605\Downloads\DROGARAIA\consulta_filiados.py
-     ```
-
-   - **Iniciar em (opcional)**: Pasta onde o script está localizado:
-     ```plaintext
-     C:\Users\14749431605\Downloads\DROGARAIA
+     C:\Users\14749431605\Downloads\DROGARAIA\rodar_script.bat
      ```
 
 8. **Concluir a Tarefa**:
@@ -92,17 +91,32 @@ Siga os passos abaixo para agendar a execução automática do script.
 
 ---
 
-### ✅ **Testando a Tarefa**
+### ✅ **Testando a Automação**
 
 1. No Agendador de Tarefas, clique com o botão direito na tarefa criada.
 2. Selecione **"Executar"**.
-3. Verifique se o arquivo CSV é gerado corretamente na pasta especificada.
+3. Verifique se o arquivo CSV foi gerado corretamente na pasta especificada.
 
 ---
 
-### 🛠️ **Configurações Adicionais**
+### 🛠️ **Configurações Avançadas**
 
 - **Executar mesmo quando o usuário estiver desconectado**:
   - Abra as propriedades da tarefa, vá até a aba **"Segurança"** e marque **"Executar estando o usuário conectado ou não"**.
-- **Executar com privilégios mais altos** (se necessário).
+- **Executar com privilégios mais altos**:
+  - Marque a opção **"Executar com privilégios mais altos"** na aba **"Geral"**.
+
+---
+
+### 📂 **Estrutura do Projeto**
+
+```plaintext
+AUTOMAÇÃO DROGARAIA/
+│
+├── consulta_filiados.py      # Script principal
+├── .env                      # Variáveis de ambiente
+├── rodar_script.bat          # Script para automatização
+├── requirements.txt          # Dependências do projeto
+└── README.md                 # Documentação
+```
 
